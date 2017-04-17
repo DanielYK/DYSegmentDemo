@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  DYScrollSegmentDemo
+
+  Created by Daniel Yao on 17/4/13.
+  Copyright © 2017年 Daniel Yao. All rights reserved.
+*/
+CFBundleDisplayName = "DYSegment";
