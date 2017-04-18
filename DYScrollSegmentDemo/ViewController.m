@@ -92,6 +92,7 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [_dySegment dyDidScrollChangeTheTitleColorWithContentOfSet:scrollView.contentOffset.x];
 }
+#pragma mark - DYSegmentDelegate
 -(void)dySegment:(DYSegmentView *)segment didSelectIndex:(NSInteger)index{
     NSString *notiStr;
     if (index == 1) {
