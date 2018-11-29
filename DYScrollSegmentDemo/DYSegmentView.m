@@ -6,8 +6,9 @@
 //  Copyright © 2017年 Daniel Yao. All rights reserved.
 //
 
-#define BTN_LINE_WIDTH 80
+#define BTN_WIDTH 50
 #define BTN_BASE_SCALE 0.2
+#define BOTTOM_LINE_WIDTH 10
 
 #import "DYSegmentView.h"
 
@@ -31,12 +32,12 @@
 @implementation DYSegmentView
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
@@ -46,7 +47,7 @@
         self.btnArray       = [[NSMutableArray alloc]init];
         self.titleNormalColor   = [UIColor whiteColor];
         self.defaultSelectIndex = 1;
-
+        
         [self addSubview:self.bgScrollView];
         [self registerKVOPaths];
         
@@ -131,15 +132,15 @@
         return;
     }
     _titleArray = titleArray;
-    self.bottomLine = [[UIView alloc]initWithFrame:CGRectMake(self.segmentWidth/4.0-BTN_LINE_WIDTH/2.0+(self.defaultSelectIndex-1)*(BTN_LINE_WIDTH+self.segmentWidth/2.0), self.segmentHeight-4, BTN_LINE_WIDTH, 2)];
+    self.bottomLine = [[UIView alloc]initWithFrame:CGRectMake(self.segmentWidth/4.0-BOTTOM_LINE_WIDTH/2.0, self.segmentHeight-4, BOTTOM_LINE_WIDTH, 2)];
     self.bottomLine.backgroundColor = [UIColor redColor];
     [self.bgScrollView addSubview:self.bottomLine];
     
-    self.bgScrollView.contentSize = CGSizeMake(BTN_LINE_WIDTH*_titleArray.count, self.segmentHeight);
+    self.bgScrollView.contentSize = CGSizeMake(BTN_WIDTH*_titleArray.count, self.segmentHeight);
     
     for (int i = 0; i<_titleArray.count; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(self.segmentWidth/4.0-BTN_LINE_WIDTH/2.0+self.segmentWidth/2.0*i, 0, BTN_LINE_WIDTH, self.segmentHeight-2);
+        btn.frame = CGRectMake(self.segmentWidth/4.0-BTN_WIDTH/2.0+self.segmentWidth/2.0*i, 0, BTN_WIDTH, self.segmentHeight-2);
         btn.tag = i+1;
         [btn setTitle:_titleArray[i] forState:UIControlStateNormal];
         [btn setTitleColor:_titleNormalColor forState:UIControlStateNormal];
@@ -222,12 +223,7 @@
     CGRect frame    = self.bottomLine.frame;
     CGFloat lineDif = rightBtn.frame.origin.x-leftBtn.frame.origin.x;
     
-    frame.origin.x  = rightScale*lineDif+leftBtn.frame.origin.x;
-    CGFloat widthDif = rightBtn.frame.size.width-leftBtn.frame.size.width;
-    if (widthDif != 0) {
-        CGFloat leftSelectBgWidth = leftBtn.frame.size.width;
-        frame.size.width = rightScale*widthDif + leftSelectBgWidth;
-    }
+    frame.origin.x  = rightScale*lineDif+leftBtn.frame.origin.x+leftBtn.frame.size.width/2.0-BOTTOM_LINE_WIDTH/2.0;
     self.bottomLine.frame = frame;
 }
 
